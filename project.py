@@ -5,7 +5,7 @@ import numpy as np
 model  = pickle.load(open('pipe.pkl','rb'))
 
 
-st.title('Heart Attack Prediction')
+st.title('Heart Disease Prediction')
 
 
 col1, col2 = st.columns(2)

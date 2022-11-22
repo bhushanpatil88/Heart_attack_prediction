@@ -1,25 +1,23 @@
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:31:42.839636Z","iopub.execute_input":"2022-11-08T16:31:42.840131Z","iopub.status.idle":"2022-11-08T16:31:42.847405Z","shell.execute_reply.started":"2022-11-08T16:31:42.840084Z","shell.execute_reply":"2022-11-08T16:31:42.846047Z"}}
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:16.502014Z","iopub.execute_input":"2022-11-22T17:20:16.502493Z","iopub.status.idle":"2022-11-22T17:20:16.509098Z","shell.execute_reply.started":"2022-11-22T17:20:16.502456Z","shell.execute_reply":"2022-11-22T17:20:16.507911Z"}}
+import numpy as np 
+import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.compose import ColumnTransformer,make_column_transformer
 from sklearn.pipeline import Pipeline,make_pipeline
 
-
-
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:31:44.038658Z","iopub.execute_input":"2022-11-08T16:31:44.039112Z","iopub.status.idle":"2022-11-08T16:31:44.062683Z","shell.execute_reply.started":"2022-11-08T16:31:44.039073Z","shell.execute_reply":"2022-11-08T16:31:44.061169Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:17.304059Z","iopub.execute_input":"2022-11-22T17:20:17.304524Z","iopub.status.idle":"2022-11-22T17:20:17.349430Z","shell.execute_reply.started":"2022-11-22T17:20:17.304488Z","shell.execute_reply":"2022-11-22T17:20:17.348007Z"}}
 df = pd.read_csv("../input/heart-disease-dataset/heart.csv")
 df.head()
 df.shape
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"_kg_hide-input":false,"execution":{"iopub.status.busy":"2022-11-08T16:31:44.789308Z","iopub.execute_input":"2022-11-08T16:31:44.789720Z","iopub.status.idle":"2022-11-08T16:31:45.035465Z","shell.execute_reply.started":"2022-11-08T16:31:44.789687Z","shell.execute_reply":"2022-11-08T16:31:45.034117Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"_kg_hide-input":false,"execution":{"iopub.status.busy":"2022-11-22T17:20:18.048903Z","iopub.execute_input":"2022-11-22T17:20:18.049355Z","iopub.status.idle":"2022-11-22T17:20:18.289058Z","shell.execute_reply.started":"2022-11-22T17:20:18.049316Z","shell.execute_reply":"2022-11-22T17:20:18.287816Z"}}
 sns.heatmap(df.isnull(),yticklabels=False,cbar=False)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:31:47.099820Z","iopub.execute_input":"2022-11-08T16:31:47.100276Z","iopub.status.idle":"2022-11-08T16:31:47.157621Z","shell.execute_reply.started":"2022-11-08T16:31:47.100237Z","shell.execute_reply":"2022-11-08T16:31:47.156510Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:18.737110Z","iopub.execute_input":"2022-11-22T17:20:18.737563Z","iopub.status.idle":"2022-11-22T17:20:18.797980Z","shell.execute_reply.started":"2022-11-22T17:20:18.737523Z","shell.execute_reply":"2022-11-22T17:20:18.796741Z"}}
 df.describe()
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:31:49.840727Z","iopub.execute_input":"2022-11-08T16:31:49.841440Z","iopub.status.idle":"2022-11-08T16:31:49.850901Z","shell.execute_reply.started":"2022-11-08T16:31:49.841399Z","shell.execute_reply":"2022-11-08T16:31:49.849806Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:20.532812Z","iopub.execute_input":"2022-11-22T17:20:20.533585Z","iopub.status.idle":"2022-11-22T17:20:20.544276Z","shell.execute_reply.started":"2022-11-22T17:20:20.533540Z","shell.execute_reply":"2022-11-22T17:20:20.542253Z"}}
 categorical_cols = []
 categorical_inds = []
 counting_cols = []
@@ -37,10 +35,10 @@ for i in df.columns:
         counting_cols.append(i)
         counting_inds.append(cnt-1)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:31:51.595009Z","iopub.execute_input":"2022-11-08T16:31:51.595536Z","iopub.status.idle":"2022-11-08T16:31:51.601649Z","shell.execute_reply.started":"2022-11-08T16:31:51.595490Z","shell.execute_reply":"2022-11-08T16:31:51.599993Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:21.693204Z","iopub.execute_input":"2022-11-22T17:20:21.693635Z","iopub.status.idle":"2022-11-22T17:20:21.699409Z","shell.execute_reply.started":"2022-11-22T17:20:21.693598Z","shell.execute_reply":"2022-11-22T17:20:21.698155Z"}}
 print(categorical_cols)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:31:52.465883Z","iopub.execute_input":"2022-11-08T16:31:52.466615Z","iopub.status.idle":"2022-11-08T16:31:52.474005Z","shell.execute_reply.started":"2022-11-08T16:31:52.466574Z","shell.execute_reply":"2022-11-08T16:31:52.472392Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:22.676984Z","iopub.execute_input":"2022-11-22T17:20:22.677482Z","iopub.status.idle":"2022-11-22T17:20:22.685008Z","shell.execute_reply.started":"2022-11-22T17:20:22.677440Z","shell.execute_reply":"2022-11-22T17:20:22.683500Z"}}
 #They are already encoded
 
 categorical_cols.remove('target')
@@ -52,13 +50,13 @@ categorical_inds.remove(13)
 print(categorical_cols)
 print(counting_cols)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:31:54.663837Z","iopub.execute_input":"2022-11-08T16:31:54.664564Z","iopub.status.idle":"2022-11-08T16:31:54.676379Z","shell.execute_reply.started":"2022-11-08T16:31:54.664519Z","shell.execute_reply":"2022-11-08T16:31:54.675342Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:23.856849Z","iopub.execute_input":"2022-11-22T17:20:23.857277Z","iopub.status.idle":"2022-11-22T17:20:23.871250Z","shell.execute_reply.started":"2022-11-22T17:20:23.857241Z","shell.execute_reply":"2022-11-22T17:20:23.869890Z"}}
 for i in categorical_cols:
     print(i)
     print(df[i].value_counts())
     print()
 
-# %% [code] {"execution":{"iopub.status.busy":"2022-11-08T16:31:58.085204Z","iopub.execute_input":"2022-11-08T16:31:58.086057Z","iopub.status.idle":"2022-11-08T16:32:00.389442Z","shell.execute_reply.started":"2022-11-08T16:31:58.086015Z","shell.execute_reply":"2022-11-08T16:32:00.387860Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:26.363820Z","iopub.execute_input":"2022-11-22T17:20:26.364236Z","iopub.status.idle":"2022-11-22T17:20:28.267036Z","shell.execute_reply.started":"2022-11-22T17:20:26.364202Z","shell.execute_reply":"2022-11-22T17:20:28.265740Z"}}
 x = 1
 plt.figure(figsize = (20,20))
 
@@ -68,7 +66,7 @@ for i in df.columns:
     plt.title(i)
     x = x+1
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:32:55.739072Z","iopub.execute_input":"2022-11-08T16:32:55.740003Z","iopub.status.idle":"2022-11-08T16:32:55.751118Z","shell.execute_reply.started":"2022-11-08T16:32:55.739957Z","shell.execute_reply":"2022-11-08T16:32:55.749992Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:32.435894Z","iopub.execute_input":"2022-11-22T17:20:32.436304Z","iopub.status.idle":"2022-11-22T17:20:32.449365Z","shell.execute_reply.started":"2022-11-22T17:20:32.436272Z","shell.execute_reply":"2022-11-22T17:20:32.447667Z"}}
 from sklearn.model_selection import train_test_split
 X_train,X_test,y_train,y_test =train_test_split(df.drop(['target'],axis=1),
                                                 df['target'],
@@ -79,25 +77,25 @@ y_train = y_train.values
 X_test  = X_test.values
 y_test  = y_test.values
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:32:56.238866Z","iopub.execute_input":"2022-11-08T16:32:56.239616Z","iopub.status.idle":"2022-11-08T16:32:56.248766Z","shell.execute_reply.started":"2022-11-08T16:32:56.239560Z","shell.execute_reply":"2022-11-08T16:32:56.247433Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:34.037786Z","iopub.execute_input":"2022-11-22T17:20:34.038828Z","iopub.status.idle":"2022-11-22T17:20:34.048255Z","shell.execute_reply.started":"2022-11-22T17:20:34.038776Z","shell.execute_reply":"2022-11-22T17:20:34.047070Z"}}
 df.iloc[102,:-1].values
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:32:56.918149Z","iopub.execute_input":"2022-11-08T16:32:56.918635Z","iopub.status.idle":"2022-11-08T16:32:56.925123Z","shell.execute_reply.started":"2022-11-08T16:32:56.918595Z","shell.execute_reply":"2022-11-08T16:32:56.923730Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:35.795020Z","iopub.execute_input":"2022-11-22T17:20:35.795466Z","iopub.status.idle":"2022-11-22T17:20:35.802399Z","shell.execute_reply.started":"2022-11-22T17:20:35.795420Z","shell.execute_reply":"2022-11-22T17:20:35.800740Z"}}
 from sklearn.preprocessing import OneHotEncoder
 trf3 = make_column_transformer((OneHotEncoder(drop=("first"),handle_unknown='ignore',sparse=False),categorical_inds), remainder='passthrough')
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:32:58.513385Z","iopub.execute_input":"2022-11-08T16:32:58.513856Z","iopub.status.idle":"2022-11-08T16:32:58.520611Z","shell.execute_reply.started":"2022-11-08T16:32:58.513821Z","shell.execute_reply":"2022-11-08T16:32:58.519091Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:36.821580Z","iopub.execute_input":"2022-11-22T17:20:36.821996Z","iopub.status.idle":"2022-11-22T17:20:36.828294Z","shell.execute_reply.started":"2022-11-22T17:20:36.821960Z","shell.execute_reply":"2022-11-22T17:20:36.827233Z"}}
 from sklearn.preprocessing import RobustScaler
 trf4 = make_column_transformer((RobustScaler(),counting_inds),remainder='passthrough')
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:32:59.342516Z","iopub.execute_input":"2022-11-08T16:32:59.343157Z","iopub.status.idle":"2022-11-08T16:32:59.361550Z","shell.execute_reply.started":"2022-11-08T16:32:59.343115Z","shell.execute_reply":"2022-11-08T16:32:59.360232Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:39.867715Z","iopub.execute_input":"2022-11-22T17:20:39.868116Z","iopub.status.idle":"2022-11-22T17:20:39.886042Z","shell.execute_reply.started":"2022-11-22T17:20:39.868083Z","shell.execute_reply":"2022-11-22T17:20:39.884736Z"}}
 pipe = make_pipeline(trf3,trf4)
 
 
 X_train = pipe.fit_transform(X_train)
 X_test = pipe.transform(X_test)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:01.032490Z","iopub.execute_input":"2022-11-08T16:33:01.032912Z","iopub.status.idle":"2022-11-08T16:33:01.042066Z","shell.execute_reply.started":"2022-11-08T16:33:01.032881Z","shell.execute_reply":"2022-11-08T16:33:01.040994Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:41.200208Z","iopub.execute_input":"2022-11-22T17:20:41.201022Z","iopub.status.idle":"2022-11-22T17:20:41.210175Z","shell.execute_reply.started":"2022-11-22T17:20:41.200968Z","shell.execute_reply":"2022-11-22T17:20:41.208398Z"}}
 from sklearn.metrics import confusion_matrix, classification_report, plot_confusion_matrix,accuracy_score
 
 
@@ -117,27 +115,26 @@ def eval_metric(model, X_train, y_train, X_test, y_test):
     print()
     dt_acc_score = accuracy_score(y_test, y_pred)
     print("Accuracy :",dt_acc_score*100,'\n')
-    
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:03.023969Z","iopub.execute_input":"2022-11-08T16:33:03.024439Z","iopub.status.idle":"2022-11-08T16:33:03.436938Z","shell.execute_reply.started":"2022-11-08T16:33:03.024400Z","shell.execute_reply":"2022-11-08T16:33:03.435194Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:43.144333Z","iopub.execute_input":"2022-11-22T17:20:43.144831Z","iopub.status.idle":"2022-11-22T17:20:43.436760Z","shell.execute_reply.started":"2022-11-22T17:20:43.144789Z","shell.execute_reply":"2022-11-22T17:20:43.435409Z"}}
 from sklearn.linear_model import LogisticRegression
 classifier1 = LogisticRegression(solver='lbfgs', max_iter=10000,random_state=2)
 classifier1.fit(X_train, y_train)
 y_pred = classifier1.predict(X_test)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:04.176302Z","iopub.execute_input":"2022-11-08T16:33:04.176749Z","iopub.status.idle":"2022-11-08T16:33:04.209449Z","shell.execute_reply.started":"2022-11-08T16:33:04.176716Z","shell.execute_reply":"2022-11-08T16:33:04.207784Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:50.465501Z","iopub.execute_input":"2022-11-22T17:20:50.466615Z","iopub.status.idle":"2022-11-22T17:20:50.493176Z","shell.execute_reply.started":"2022-11-22T17:20:50.466565Z","shell.execute_reply":"2022-11-22T17:20:50.491915Z"}}
 eval_metric(classifier1, X_train, y_train, X_test, y_test)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:06.793628Z","iopub.execute_input":"2022-11-08T16:33:06.794056Z","iopub.status.idle":"2022-11-08T16:33:06.804221Z","shell.execute_reply.started":"2022-11-08T16:33:06.794023Z","shell.execute_reply":"2022-11-08T16:33:06.803363Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:53.027554Z","iopub.execute_input":"2022-11-22T17:20:53.027992Z","iopub.status.idle":"2022-11-22T17:20:53.037104Z","shell.execute_reply.started":"2022-11-22T17:20:53.027954Z","shell.execute_reply":"2022-11-22T17:20:53.035941Z"}}
 from sklearn.tree import DecisionTreeClassifier
 classifier2 = DecisionTreeClassifier(criterion = 'entropy', random_state = 2)
 classifier2.fit(X_train, y_train)
 y_pred = classifier2.predict(X_test)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:09.007206Z","iopub.execute_input":"2022-11-08T16:33:09.008255Z","iopub.status.idle":"2022-11-08T16:33:09.026059Z","shell.execute_reply.started":"2022-11-08T16:33:09.008213Z","shell.execute_reply":"2022-11-08T16:33:09.024770Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:55.028888Z","iopub.execute_input":"2022-11-22T17:20:55.029575Z","iopub.status.idle":"2022-11-22T17:20:55.048073Z","shell.execute_reply.started":"2022-11-22T17:20:55.029537Z","shell.execute_reply":"2022-11-22T17:20:55.046694Z"}}
 eval_metric(classifier2, X_train, y_train, X_test, y_test)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:11.224946Z","iopub.execute_input":"2022-11-08T16:33:11.225732Z","iopub.status.idle":"2022-11-08T16:33:16.133982Z","shell.execute_reply.started":"2022-11-08T16:33:11.225679Z","shell.execute_reply":"2022-11-08T16:33:16.132471Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:20:56.609741Z","iopub.execute_input":"2022-11-22T17:20:56.610202Z","iopub.status.idle":"2022-11-22T17:21:00.424334Z","shell.execute_reply.started":"2022-11-22T17:20:56.610164Z","shell.execute_reply":"2022-11-22T17:21:00.423248Z"}}
 from sklearn.model_selection import GridSearchCV
 params = {
     'max_depth': [3,4,5,6,7,8,9,10,11,12,13],
@@ -159,13 +156,13 @@ print(best_accuracy)
 print(best_parameters)
 print(best_model)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:16.136754Z","iopub.execute_input":"2022-11-08T16:33:16.138064Z","iopub.status.idle":"2022-11-08T16:33:16.366848Z","shell.execute_reply.started":"2022-11-08T16:33:16.138003Z","shell.execute_reply":"2022-11-08T16:33:16.365367Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:21:00.426496Z","iopub.execute_input":"2022-11-22T17:21:00.426965Z","iopub.status.idle":"2022-11-22T17:21:00.633537Z","shell.execute_reply.started":"2022-11-22T17:21:00.426926Z","shell.execute_reply":"2022-11-22T17:21:00.632037Z"}}
 from sklearn.ensemble import RandomForestClassifier
 classifier3 = RandomForestClassifier()
 classifier3.fit(X_train, y_train)
 y_pred = classifier3.predict(X_test)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:16.369470Z","iopub.execute_input":"2022-11-08T16:33:16.369902Z","iopub.status.idle":"2022-11-08T16:33:16.435112Z","shell.execute_reply.started":"2022-11-08T16:33:16.369856Z","shell.execute_reply":"2022-11-08T16:33:16.433775Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:21:00.634878Z","iopub.execute_input":"2022-11-22T17:21:00.635245Z","iopub.status.idle":"2022-11-22T17:21:00.701091Z","shell.execute_reply.started":"2022-11-22T17:21:00.635214Z","shell.execute_reply":"2022-11-22T17:21:00.699902Z"}}
 eval_metric(classifier3, X_train, y_train, X_test, y_test)
 
 # %% [code] {"jupyter":{"outputs_hidden":false}}
@@ -190,16 +187,16 @@ print(best_accuracy)
 print(best_parameters)
 print(best_model)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:23.497430Z","iopub.execute_input":"2022-11-08T16:33:23.497898Z","iopub.status.idle":"2022-11-08T16:33:23.540643Z","shell.execute_reply.started":"2022-11-08T16:33:23.497861Z","shell.execute_reply":"2022-11-08T16:33:23.538910Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:21:17.973840Z","iopub.execute_input":"2022-11-22T17:21:17.974294Z","iopub.status.idle":"2022-11-22T17:21:18.010039Z","shell.execute_reply.started":"2022-11-22T17:21:17.974253Z","shell.execute_reply":"2022-11-22T17:21:18.008209Z"}}
 from sklearn.neighbors import KNeighborsClassifier
 classifier4 = KNeighborsClassifier(n_neighbors = 2)
 classifier4.fit(X_train, y_train)
 y_pred = classifier4.predict(X_test)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:33.906582Z","iopub.execute_input":"2022-11-08T16:33:33.907409Z","iopub.status.idle":"2022-11-08T16:33:34.028306Z","shell.execute_reply.started":"2022-11-08T16:33:33.907367Z","shell.execute_reply":"2022-11-08T16:33:34.026586Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:21:18.426478Z","iopub.execute_input":"2022-11-22T17:21:18.427192Z","iopub.status.idle":"2022-11-22T17:21:18.519453Z","shell.execute_reply.started":"2022-11-22T17:21:18.427147Z","shell.execute_reply":"2022-11-22T17:21:18.518054Z"}}
 eval_metric(classifier4, X_train, y_train, X_test, y_test)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:38.211619Z","iopub.execute_input":"2022-11-08T16:33:38.212089Z","iopub.status.idle":"2022-11-08T16:33:39.436838Z","shell.execute_reply.started":"2022-11-08T16:33:38.212049Z","shell.execute_reply":"2022-11-08T16:33:39.434857Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:21:18.809815Z","iopub.execute_input":"2022-11-22T17:21:18.810245Z","iopub.status.idle":"2022-11-22T17:21:19.722535Z","shell.execute_reply.started":"2022-11-22T17:21:18.810212Z","shell.execute_reply":"2022-11-22T17:21:19.721157Z"}}
 scores=[]
 
 for i in range(1,40):
@@ -208,7 +205,7 @@ for i in range(1,40):
     y_pred = classifier4.predict(X_test)
     scores.append(accuracy_score(y_test, y_pred))
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:39.440259Z","iopub.execute_input":"2022-11-08T16:33:39.441393Z","iopub.status.idle":"2022-11-08T16:33:39.452245Z","shell.execute_reply.started":"2022-11-08T16:33:39.441321Z","shell.execute_reply":"2022-11-08T16:33:39.450652Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:21:21.969682Z","iopub.execute_input":"2022-11-22T17:21:21.970427Z","iopub.status.idle":"2022-11-22T17:21:21.978090Z","shell.execute_reply.started":"2022-11-22T17:21:21.970364Z","shell.execute_reply":"2022-11-22T17:21:21.976707Z"}}
 maxi_ind=-1
 maxi=0
 cnt=0
@@ -219,15 +216,15 @@ for i in scores:
         maxi = i
 print(max_ind)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:39.785050Z","iopub.execute_input":"2022-11-08T16:33:39.785473Z","iopub.status.idle":"2022-11-08T16:33:39.824894Z","shell.execute_reply.started":"2022-11-08T16:33:39.785441Z","shell.execute_reply":"2022-11-08T16:33:39.822901Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:21:23.602524Z","iopub.execute_input":"2022-11-22T17:21:23.602954Z","iopub.status.idle":"2022-11-22T17:21:23.631678Z","shell.execute_reply.started":"2022-11-22T17:21:23.602920Z","shell.execute_reply":"2022-11-22T17:21:23.630337Z"}}
 classifier4 = KNeighborsClassifier(n_neighbors = max_ind)
 classifier4.fit(X_train, y_train)
 y_pred = classifier4.predict(X_test)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:42.685929Z","iopub.execute_input":"2022-11-08T16:33:42.686849Z","iopub.status.idle":"2022-11-08T16:33:42.798067Z","shell.execute_reply.started":"2022-11-08T16:33:42.686795Z","shell.execute_reply":"2022-11-08T16:33:42.796806Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:21:24.831732Z","iopub.execute_input":"2022-11-22T17:21:24.832765Z","iopub.status.idle":"2022-11-22T17:21:24.909893Z","shell.execute_reply.started":"2022-11-22T17:21:24.832718Z","shell.execute_reply":"2022-11-22T17:21:24.908551Z"}}
 eval_metric(classifier4, X_train, y_train, X_test, y_test)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:58.276733Z","iopub.execute_input":"2022-11-08T16:33:58.277155Z","iopub.status.idle":"2022-11-08T16:33:58.288290Z","shell.execute_reply.started":"2022-11-08T16:33:58.277121Z","shell.execute_reply":"2022-11-08T16:33:58.287125Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:21:27.457733Z","iopub.execute_input":"2022-11-22T17:21:27.458168Z","iopub.status.idle":"2022-11-22T17:21:27.469431Z","shell.execute_reply.started":"2022-11-22T17:21:27.458134Z","shell.execute_reply":"2022-11-22T17:21:27.468310Z"}}
 from sklearn.model_selection import train_test_split
 X_train,X_test,y_train,y_test =train_test_split(df.drop(['target'],axis=1),
                                                 df['target'],
@@ -239,51 +236,51 @@ y_train = y_train.values
 X_test  = X_test.values
 y_test  = y_test.values
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:33:59.231658Z","iopub.execute_input":"2022-11-08T16:33:59.232323Z","iopub.status.idle":"2022-11-08T16:33:59.237336Z","shell.execute_reply.started":"2022-11-08T16:33:59.232274Z","shell.execute_reply":"2022-11-08T16:33:59.236439Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:23:01.313360Z","iopub.execute_input":"2022-11-22T17:23:01.313861Z","iopub.status.idle":"2022-11-22T17:23:01.320033Z","shell.execute_reply.started":"2022-11-22T17:23:01.313822Z","shell.execute_reply":"2022-11-22T17:23:01.318913Z"}}
 from sklearn.preprocessing import OneHotEncoder
 trf3 = make_column_transformer((OneHotEncoder(drop=("first"),handle_unknown='ignore',sparse=False),categorical_inds), remainder='passthrough')
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:34:00.856509Z","iopub.execute_input":"2022-11-08T16:34:00.856972Z","iopub.status.idle":"2022-11-08T16:34:00.862657Z","shell.execute_reply.started":"2022-11-08T16:34:00.856932Z","shell.execute_reply":"2022-11-08T16:34:00.861802Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:23:01.903422Z","iopub.execute_input":"2022-11-22T17:23:01.904415Z","iopub.status.idle":"2022-11-22T17:23:01.909732Z","shell.execute_reply.started":"2022-11-22T17:23:01.904373Z","shell.execute_reply":"2022-11-22T17:23:01.908510Z"}}
 from sklearn.preprocessing import RobustScaler
 trf4 = make_column_transformer((RobustScaler(),counting_inds),remainder='passthrough')
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:34:01.662010Z","iopub.execute_input":"2022-11-08T16:34:01.662812Z","iopub.status.idle":"2022-11-08T16:34:01.672499Z","shell.execute_reply.started":"2022-11-08T16:34:01.662764Z","shell.execute_reply":"2022-11-08T16:34:01.671355Z"}}
-from sklearn.tree import DecisionTreeClassifier
-classifier = DecisionTreeClassifier(criterion = 'entropy', random_state = 2)
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:23:36.074837Z","iopub.execute_input":"2022-11-22T17:23:36.075270Z","iopub.status.idle":"2022-11-22T17:23:36.294267Z","shell.execute_reply.started":"2022-11-22T17:23:36.075235Z","shell.execute_reply":"2022-11-22T17:23:36.292976Z"}}
+from sklearn.ensemble import RandomForestClassifier
+classifier = RandomForestClassifier()
 classifier.fit(X_train, y_train)
 y_pred = classifier.predict(X_test)
 
-# %% [code] {"_kg_hide-input":true,"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:34:03.182270Z","iopub.execute_input":"2022-11-08T16:34:03.183109Z","iopub.status.idle":"2022-11-08T16:34:03.215568Z","shell.execute_reply.started":"2022-11-08T16:34:03.183063Z","shell.execute_reply":"2022-11-08T16:34:03.214379Z"}}
+# %% [code] {"_kg_hide-input":true,"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:23:37.646317Z","iopub.execute_input":"2022-11-22T17:23:37.646786Z","iopub.status.idle":"2022-11-22T17:23:37.858846Z","shell.execute_reply.started":"2022-11-22T17:23:37.646734Z","shell.execute_reply":"2022-11-22T17:23:37.857540Z"}}
 pipe = make_pipeline(trf3,trf4,classifier)
 
 
 pipe.fit(X_train,y_train)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:34:05.613874Z","iopub.execute_input":"2022-11-08T16:34:05.614340Z","iopub.status.idle":"2022-11-08T16:34:05.628500Z","shell.execute_reply.started":"2022-11-08T16:34:05.614261Z","shell.execute_reply":"2022-11-08T16:34:05.627077Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:23:40.246546Z","iopub.execute_input":"2022-11-22T17:23:40.246991Z","iopub.status.idle":"2022-11-22T17:23:40.278396Z","shell.execute_reply.started":"2022-11-22T17:23:40.246958Z","shell.execute_reply":"2022-11-22T17:23:40.277181Z"}}
 y_pred = pipe.predict(X_test)
 y_pred
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:34:09.216126Z","iopub.execute_input":"2022-11-08T16:34:09.217054Z","iopub.status.idle":"2022-11-08T16:34:09.242883Z","shell.execute_reply.started":"2022-11-08T16:34:09.216999Z","shell.execute_reply":"2022-11-08T16:34:09.241749Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:23:42.008207Z","iopub.execute_input":"2022-11-22T17:23:42.008657Z","iopub.status.idle":"2022-11-22T17:23:42.072970Z","shell.execute_reply.started":"2022-11-22T17:23:42.008606Z","shell.execute_reply":"2022-11-22T17:23:42.071782Z"}}
 eval_metric(pipe, X_train, y_train, X_test, y_test)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:34:13.695221Z","iopub.execute_input":"2022-11-08T16:34:13.695688Z","iopub.status.idle":"2022-11-08T16:34:13.701844Z","shell.execute_reply.started":"2022-11-08T16:34:13.695649Z","shell.execute_reply":"2022-11-08T16:34:13.700914Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:23:44.810560Z","iopub.execute_input":"2022-11-22T17:23:44.811813Z","iopub.status.idle":"2022-11-22T17:23:44.826272Z","shell.execute_reply.started":"2022-11-22T17:23:44.811762Z","shell.execute_reply":"2022-11-22T17:23:44.824958Z"}}
 import pickle
 
 pickle.dump(pipe,open('pipe.pkl','wb'))
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:34:14.497691Z","iopub.execute_input":"2022-11-08T16:34:14.498939Z","iopub.status.idle":"2022-11-08T16:34:14.505761Z","shell.execute_reply.started":"2022-11-08T16:34:14.498878Z","shell.execute_reply":"2022-11-08T16:34:14.504540Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:23:46.121705Z","iopub.execute_input":"2022-11-22T17:23:46.122153Z","iopub.status.idle":"2022-11-22T17:23:46.136307Z","shell.execute_reply.started":"2022-11-22T17:23:46.122117Z","shell.execute_reply":"2022-11-22T17:23:46.134782Z"}}
 pipe = pickle.load(open('pipe.pkl','rb'))
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:34:15.211137Z","iopub.execute_input":"2022-11-08T16:34:15.211943Z","iopub.status.idle":"2022-11-08T16:34:15.219364Z","shell.execute_reply.started":"2022-11-08T16:34:15.211901Z","shell.execute_reply":"2022-11-08T16:34:15.218313Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:23:46.600796Z","iopub.execute_input":"2022-11-22T17:23:46.601263Z","iopub.status.idle":"2022-11-22T17:23:46.608465Z","shell.execute_reply.started":"2022-11-22T17:23:46.601222Z","shell.execute_reply":"2022-11-22T17:23:46.606853Z"}}
 test1 = np.array([53,1,0,140,203,1,0,155,1,3.1,0,0,3]).reshape(1,13)
 
-# %% [code] {"execution":{"iopub.status.busy":"2022-11-08T16:34:17.261829Z","iopub.execute_input":"2022-11-08T16:34:17.262251Z","iopub.status.idle":"2022-11-08T16:34:17.267758Z","shell.execute_reply.started":"2022-11-08T16:34:17.262218Z","shell.execute_reply":"2022-11-08T16:34:17.266823Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:23:47.134327Z","iopub.execute_input":"2022-11-22T17:23:47.135271Z","iopub.status.idle":"2022-11-22T17:23:47.141613Z","shell.execute_reply.started":"2022-11-22T17:23:47.135222Z","shell.execute_reply":"2022-11-22T17:23:47.140398Z"}}
 test2 = np.array([45,1,2,255,255,1,2,255,1,1.4,2,4,3]).reshape(1,13)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:34:17.887378Z","iopub.execute_input":"2022-11-08T16:34:17.888128Z","iopub.status.idle":"2022-11-08T16:34:17.897362Z","shell.execute_reply.started":"2022-11-08T16:34:17.888086Z","shell.execute_reply":"2022-11-08T16:34:17.896504Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:23:47.646191Z","iopub.execute_input":"2022-11-22T17:23:47.646674Z","iopub.status.idle":"2022-11-22T17:23:47.672683Z","shell.execute_reply.started":"2022-11-22T17:23:47.646620Z","shell.execute_reply":"2022-11-22T17:23:47.671295Z"}}
 pipe.predict(test1)
 
-# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-08T16:34:19.504458Z","iopub.execute_input":"2022-11-08T16:34:19.505355Z","iopub.status.idle":"2022-11-08T16:34:19.516246Z","shell.execute_reply.started":"2022-11-08T16:34:19.505173Z","shell.execute_reply":"2022-11-08T16:34:19.514964Z"}}
+# %% [code] {"jupyter":{"outputs_hidden":false},"execution":{"iopub.status.busy":"2022-11-22T17:23:50.574866Z","iopub.execute_input":"2022-11-22T17:23:50.575493Z","iopub.status.idle":"2022-11-22T17:23:50.597943Z","shell.execute_reply.started":"2022-11-22T17:23:50.575445Z","shell.execute_reply":"2022-11-22T17:23:50.597016Z"}}
 pipe.predict(df.iloc[102,:-1].values.reshape(1,13))
 
-# %% [code]
+# %% [code] {"jupyter":{"outputs_hidden":false}}

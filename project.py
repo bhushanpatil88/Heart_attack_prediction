@@ -4,7 +4,7 @@ import numpy as np
 
 model  = pickle.load(open('pipe.pkl','rb'))
 
-
+#Title added
 st.title('Heart Disease Prediction')
 
 
